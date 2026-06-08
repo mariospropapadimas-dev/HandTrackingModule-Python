@@ -42,8 +42,8 @@ This project uses **OpenCV**, **MediaPipe**, and **Pycaw** to track your hand in
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/gesture-volume-controller.git
-cd gesture-volume-controller
+git clone https://github.com/mariospropapadimas-dev/HandTrackingModule-Python.git
+cd HandTrackingModule-Python
 ```
 
 Install dependencies:
