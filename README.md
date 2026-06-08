@@ -3,6 +3,8 @@ Control your Windows system volume using hand gestures with OpenCV, MediaPipe, a
 
 # Gesture Volume Controller 🎛️✋
 
+<img width="634" height="502" alt="Στιγμιότυπο οθόνης 2026-06-08 173710" src="https://github.com/user-attachments/assets/21dde49c-3b28-43dd-83e0-24ac0ab6f798" />
+
 Control your Windows system volume using only your hand gestures and a webcam.
 
 This project uses **OpenCV**, **MediaPipe**, and **Pycaw** to track your hand in real-time and adjust the system volume based on the distance between your **thumb** and **index finger**.
