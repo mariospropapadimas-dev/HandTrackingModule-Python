@@ -103,4 +103,4 @@ Add a GIF or video here to showcase the project in action.
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the Apache License Version 2.0 .
