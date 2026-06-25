@@ -1,12 +1,9 @@
 import cv2
-import mediapipe as mp
-import math
-from ctypes import cast, POINTER
 import numpy as np
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from pycaw.pycaw import AudioUtilities
 import tkinter as tk
 from tkinter import simpledialog
+from hand_detector import HandDetector
 
 wCam, hCam = 640, 480
 
@@ -14,87 +11,12 @@ cap = cv2.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
 
+# Initialize audio control
 devices = AudioUtilities.GetSpeakers()
-interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-volume = cast(interface, POINTER(IAudioEndpointVolume))
+volume = devices.EndpointVolume
 volRange = volume.GetVolumeRange()
 minVol = volRange[0]
 maxVol = volRange[1]
-
-
-class HandDetector:
-    def __init__(self, mode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, trackCon=0.5):
-        self.mode = mode
-        self.maxHands = maxHands
-        self.modelComplex = modelComplexity
-        self.detectionCon = detectionCon
-        self.trackCon = trackCon
-
-        self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, self.detectionCon, self.trackCon)
-
-        self.mpDraw = mp.solutions.drawing_utils
-        self.tipIds = [4, 8, 12, 16, 20]
-
-    def findHands(self, img, draw=True):
-
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        self.result = self.hands.process(imgRGB)
-        if self.result.multi_hand_landmarks:
-            for handLMS in self.result.multi_hand_landmarks:
-                if draw:
-                    self.mpDraw.draw_landmarks(img, handLMS, self.mpHands.HAND_CONNECTIONS)
-
-        return img
-
-    def findPosition(self, img, handNo=0, draw=True):
-        xList = []
-        yList = []
-        bbox = []
-        self.lmList = []
-
-        if self.result.multi_hand_landmarks:
-
-            myhand = self.result.multi_hand_landmarks[handNo]
-            for id, lm in enumerate(myhand.landmark):
-                h, w, c = img.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                xList.append(cx)
-                yList.append(cy)
-                self.lmList.append([id, cx, cy])
-
-        return self.lmList
-
-    def fingersUp(self):
-        finger = []
-
-        if self.lmList != []:
-            if self.lmList[self.tipIds[0]][1] < self.lmList[self.tipIds[0] - 1][1]:
-                finger.append(0)
-            else:
-                finger.append(1)
-
-            for id in range(1, 5):
-                if self.lmList[self.tipIds[id]][2] < self.lmList[self.tipIds[id] - 2][2]:
-                    finger.append(1)
-                else:
-                    finger.append(0)
-
-        return finger
-
-    def Distance(self, img, Top_1, Top_2, draw=True):
-        x1, y1 = self.lmList[Top_1][1:]
-        x2, y2 = self.lmList[Top_2][1:]
-
-        cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
-
-        length = math.hypot(x1 - x2, y1 - y2)
-
-        if draw:
-            cv2.line(img, (x1, y1), (x2, y2), (0, 255, 8), 2)
-            cv2.circle(img, (cx, cy), 7, (8, 0, 255), cv2.FILLED)
-
-        return length, img, [x1, y1, x2, y2, cx, cy]
 
 
 def main():
@@ -112,8 +34,7 @@ def main():
         "Enter value (e.g. 3 for sensitive, 4 for less):"
     )
 
-    if length_value_multiplier is not None:
-        length_selected = True
+    length_selected = length_value_multiplier is not None
 
     if length_selected:
         while True:
