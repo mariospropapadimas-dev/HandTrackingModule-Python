@@ -1,11 +1,8 @@
-# HandTrackingModule-Python
-Control your Windows system volume using hand gestures with OpenCV, MediaPipe, and Pycaw. Adjust volume in real-time by changing the distance between your thumb and index finger.
-
-# Gesture Volume Controller 🎛️✋
-
-<img width="634" height="502" alt="Στιγμιότυπο οθόνης 2026-06-08 173710" src="https://github.com/user-attachments/assets/21dde49c-3b28-43dd-83e0-24ac0ab6f798" />
+# HandTrackingModule-Python — Gesture Volume Controller 🎛️✋
 
 Control your Windows system volume using only your hand gestures and a webcam.
+
+<img width="634" height="502" alt="Στιγμιότυπο οθόνης 2026-06-08 173710" src="https://github.com/user-attachments/assets/21dde49c-3b28-43dd-83e0-24ac0ab6f798" />
 
 This project uses **OpenCV**, **MediaPipe**, and **Pycaw** to track your hand in real-time and adjust the system volume based on the distance between your **thumb** and **index finger**.
 
@@ -40,6 +37,9 @@ This project uses **OpenCV**, **MediaPipe**, and **Pycaw** to track your hand in
 * Tkinter
 
 ## Installation
+
+> **Note:** Volume control relies on [Pycaw](https://github.com/AndreMiras/pycaw), which wraps the
+> Windows Core Audio API. This project only runs on **Windows**.
 
 Clone the repository:
 
@@ -112,7 +112,8 @@ Press **ESC** to exit.
 
 ## Demo
 
-Add a GIF or video here to showcase the project in action.
+See the screenshot above for a preview. A GIF or video demonstrating the live gesture control
+would be a great addition here — contributions welcome!
 
 ## License
 
