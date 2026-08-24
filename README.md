@@ -54,6 +54,19 @@ Install dependencies:
 pip install opencv-python mediapipe numpy pycaw comtypes
 ```
 
+## Project Structure
+
+```
+HandTrackingModule-Python/
+├── main.py           # Entry point: captures webcam feed and drives volume control
+├── hand_detector.py  # Reusable HandDetector class (MediaPipe hand landmarks, finger state, distance)
+└── README.md
+```
+
+`hand_detector.py` wraps MediaPipe's hand-tracking solution in a `HandDetector` class with helper
+methods (`findHands`, `findPosition`, `fingersUp`, `Distance`) that can be reused in other
+hand-tracking projects, independent of the volume-control logic in `main.py`.
+
 ## Usage
 
 Run the application:
